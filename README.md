@@ -1,19 +1,15 @@
+## Notes
+- Snippets of this code was generated using **Github copilot** prompts and finetuned as per out own requirement
+
 ## Problem
 Implement an InMemory Task scheduler Library in Java that supports these functionalities:
 Submit a task and a time at which the task should be executed. --> schedule(task, time)
 Schedule a task at a fixed interval --> scheduleAtFixedInterval(task, interval) - interval is in seconds
 The first instance will trigger it immediately and the next execution would start after interval seconds of completion of the preceding execution.
 The number of worker threads should be configurable and manage them effectively.
-Code/Design should be modular and follow design patterns.
-Don’t use any external/internal libs that provide the same functionality and core APIs should be used. Do not use the ScheduledExecutorService. Use ThreadPoolExecutors.
-
-## Resources
-- https://levelup.gitconnected.com/system-design-designing-a-distributed-job-scheduler-6d3b6d714fdb
-- https://leetcode.com/discuss/interview-question/341504/uber-implement-scheduledexecutorservice
-- https://leetcode.com/discuss/interview-question/891551/uber-experienced-2020-machine-coding-round
 
 
-## Notes
+## Notes for self
 - The components required to build this service are
   - Task interface to define the task, its runnables, interval
   - We will assume the scheduled task to be the same as a task with interval except the start time at which it should execute.
@@ -31,26 +27,3 @@ Don’t use any external/internal libs that provide the same functionality and c
   - Second option is to put the logic of picking up the task on the client side, checking the next task to be picked up from the queue and executing them.
 - This project is similiar to the task executor (DAG graph problem). But there we do not need a lock wait, we can just assign a task to the worker if it has fullfilled its dependency or put it at the back of the queue. The data structure used there is a queue and here its a priority queue.
   - You can still utilize both, where you define a task executor using a queue. And another service which does the job of scheduling/picking up the latest and assigning it this task executor.
-
-
-## Prompt for chatgpt
-```
-Implement an InMemory Task scheduler Library in Java that supports these functionalities:
-Submit a task and a time at which the task should be executed. --> schedule(task, time)
-Schedule a task at a fixed interval --> scheduleAtFixedInterval(task, interval) - interval is in seconds
-The first instance will trigger it immediately and the next execution would start after interval seconds of completion of the preceding execution.
-The number of worker threads should be configurable and manage them effectively.
-Code/Design should be modular and follow design patterns.
-Don’t use any external/internal libs that provide the same functionality and core APIs should be used. Do not use the ScheduledExecutorService. Use ThreadPoolExecutors.
-Do not use the scheduleWithFixedDelay and schedule function.
-Create your own custom implementation using a priority queue to figure out the next execution. Use locks and condition to sleep until the next scheduled execution.
-```
-
-
-### Interfaces
-- Three types of Tasks
-  - Executeonce
-  - execute at fixed intervals
-  - execute at a particular time repeatedly (which is basically fixed interval itself)
-- WorkerManager
-  - runs the logic of picking up the task and assigning it to the workers.
