@@ -1,6 +1,3 @@
-## Notes
-- Snippets of this code was generated using **Github copilot** prompts and finetuned as per out own requirement
-
 ## Problem
 Implement an InMemory Task scheduler Library in Java that supports these functionalities:
 Submit a task and a time at which the task should be executed. --> schedule(task, time)
@@ -27,3 +24,6 @@ The number of worker threads should be configurable and manage them effectively.
   - Second option is to put the logic of picking up the task on the client side, checking the next task to be picked up from the queue and executing them.
 - This project is similiar to the task executor (DAG graph problem). But there we do not need a lock wait, we can just assign a task to the worker if it has fullfilled its dependency or put it at the back of the queue. The data structure used there is a queue and here its a priority queue.
   - You can still utilize both, where you define a task executor using a queue. And another service which does the job of scheduling/picking up the latest and assigning it this task executor.
+  
+## Help
+- Snippets of this code was generated using **Github copilot** prompts and finetuned as per our own requirement
